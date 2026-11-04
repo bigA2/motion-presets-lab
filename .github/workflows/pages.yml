@@ -20,6 +20,8 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit -p .
       - run: npm run editor:build
+      # One-time setup by the repo owner: Settings → Pages → Source: "GitHub Actions".
+      # (The workflow token is not allowed to create the Pages site itself.)
       - uses: actions/configure-pages@v5
         with: { enablement: true }
       - uses: actions/upload-pages-artifact@v3

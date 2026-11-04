@@ -1,6 +1,6 @@
 ﻿.env
 *.env
 node_modules/
-out/
-dist-editor/
-out/
+/out/
+/dist-editor/
+/out/

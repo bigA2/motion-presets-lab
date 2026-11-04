@@ -12,7 +12,11 @@ const browserExecutable = process.env.REMOTION_BROWSER || null;
 const concurrency = +(process.env.CONCURRENCY ?? 4);
 fs.mkdirSync('out/review', { recursive: true });
 const serveUrl = await bundle({ entryPoint: path.resolve('presets/src/index.ts'), publicDir: path.resolve('presets/sfx/out') });
-const ff = (args) => execFileSync('npx', ['remotion', 'ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
+// Prefer the system ffmpeg (full build: fps/tile/loudnorm); Remotion's bundled ffmpeg lacks some filters.
+let sysFfmpeg = true; try { execFileSync('ffmpeg', ['-version'], { stdio: 'ignore' }); } catch { sysFfmpeg = false; }
+const ff = (args) => sysFfmpeg
+  ? execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' })
+  : execFileSync('npx', ['remotion', 'ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
 
 const jobs = [];
 if (what === 'all' || what === 'showreel') jobs.push(['Showreel-16x9', {}, 'showreel-16x9'], ['Showreel-4x5', {}, 'showreel-4x5']);
@@ -31,6 +35,7 @@ for (const [id, inputProps, name] of jobs) {
   ff(['-i', raw, '-c:v', 'copy', '-af', 'loudnorm=I=-14:TP=-1:LRA=11', '-c:a', 'aac', '-b:a', '192k', final]);
   fs.unlinkSync(raw);
   // review: 4 fps contact sheets (8 columns)
-  ff(['-i', final, '-vf', 'fps=4,scale=320:-2,tile=8x6:padding=4', `out/review/${name}-%02d.jpg`]);
+  if (sysFfmpeg) ff(['-i', final, '-vf', 'fps=4,scale=320:-2,tile=8x6:padding=4', `out/review/${name}-%02d.jpg`]);
+  else console.log('  (no system ffmpeg: skipped review sheets)');
   console.log(`done ${final}`);
 }

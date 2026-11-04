@@ -35,7 +35,7 @@ const Elem: React.FC<{ el: AdElement; spec: AdSpec; bgAt: (shift: number) => Rea
   if (el.type === 'text') {
     const center = el.align === 'center';
     return (
-      <div style={{ position: 'absolute', left: el.x * W, top: el.y * H, width: center ? undefined : (el.width ?? 0.84) * W, transform: tf(center ? 'translate(-50%, -50%)' : 'translateY(-50%)'), transformOrigin: center ? '50% 50%' : '0% 50%', ...fx }}>
+      <div style={{ position: 'absolute', left: el.x * W, top: el.y * H, width: (el.width ?? 0.84) * W, transform: tf(center ? 'translate(-50%, -50%)' : 'translateY(-50%)'), transformOrigin: center ? '50% 50%' : '0% 50%', ...fx }}>
         <TextFx text={el.text} preset={el.preset as TextPresetId} size={el.size * k} color={p.text} hotColor={el.preset === 'highlightMarker' ? p.bg : p.accent} accent={p.accent} align={el.align} font={el.font} />
       </div>
     );

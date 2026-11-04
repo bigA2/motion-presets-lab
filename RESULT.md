@@ -20,7 +20,13 @@
 - Live editor: https://biga2.github.io/motion-presets-lab/ (**needs one click from the owner first:** Settings →
   Pages → Source: "GitHub Actions", then re-run the *pages* workflow. The workflow token can't create the Pages
   site itself.)
-- Videos: Actions → *render* → latest run → Artifacts `videos-N` (and `review-frames-N`).
+- Videos: Actions → *render* → latest run → Artifacts `videos-N` (showreel 16:9, showreel 4:5, sample ad) and
+  `review-frames-N`. First green run: https://github.com/bigA2/motion-presets-lab/actions/runs/41850500122
+  (it renders all three in about 5 min). Each later push to `ads/` or `presets/` re-renders.
+- How frames were checked: I reviewed 4 fps sheets of my own local render of the same code (both formats) and
+  fixed what looked off: type too small, a static glass scene, mockups clipped in 4:5, a centred CTA wrapping.
+  This sandbox can't download Actions artifacts, so I haven't looked at the CI-rendered MP4 itself. The job
+  log shows all three finished, with audio mastered.
 
 ## Colour research: proven vs. opinion
 - **Proven (or at least sourced):** colour shapes perceived brand personality (Labrecque & Milne 2012). Text contrast
@@ -42,4 +48,6 @@
    elements on top of it. In the editor it is exact only in Chrome and Edge.
 5. **Showreel hook is plain:** text on a dark background for 2 s. It works, but it isn't scroll-stopping. Type
    cuts are fast (1.2 s each), which is fine for a reel but too fast for a real ad.
-6. **Remotion licence:** free only for teams of up to 3 people. Check before commercial use.
+6. **The sample ad (`ads/sample-ad.json`) is deliberately simple.** It is an editor starting point, not a finished
+   ad, and its grid background is very subtle at small sizes.
+7. **Remotion licence:** free only for teams of up to 3 people. Check before commercial use.

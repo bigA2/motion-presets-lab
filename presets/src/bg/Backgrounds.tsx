@@ -5,8 +5,8 @@ import { Palette, palette } from '../palettes';
 
 const alpha = (hex: string, a: number) => hex + Math.round(Math.max(0, Math.min(1, a)) * 255).toString(16).padStart(2, '0');
 
-export const Grain: React.FC<{ amount?: number; id?: string }> = ({ amount = 0.07, id = 'g' }) => {
-  const f = useCurrentFrame();
+export const Grain: React.FC<{ amount?: number; id?: string; shift?: number }> = ({ amount = 0.07, id = 'g', shift = 0 }) => {
+  const f = useCurrentFrame() + shift;
   const seed = Math.floor(f / 2) % 24;
   return (
     <AbsoluteFill style={{ pointerEvents: 'none', mixBlendMode: 'overlay', opacity: amount * 4 }}>
@@ -132,8 +132,9 @@ export const BG_PRESETS: { id: string; bg: BackgroundId; palette: string }[] = [
   { id: 'steelScan', bg: 'scanlines', palette: 'iceSteel' },
 ];
 
-export const Background: React.FC<{ bg: BackgroundId; paletteId: string; grain?: number }> = ({ bg, paletteId, grain = 0.06 }) => {
-  const f = useCurrentFrame(); const { width, height, fps } = useVideoConfig();
+/** shift: frames to add to the local frame (used when a glass panel inside a <Sequence> re-renders the background). */
+export const Background: React.FC<{ bg: BackgroundId; paletteId: string; grain?: number; shift?: number }> = ({ bg, paletteId, grain = 0.06, shift = 0 }) => {
+  const f = useCurrentFrame() + shift; const { width, height, fps } = useVideoConfig();
   const C = BACKGROUNDS[bg] ?? meshDrift;
-  return (<AbsoluteFill><C p={palette(paletteId)} t={f / fps} w={width} h={height} />{grain > 0 && <Grain amount={grain} id={bg} />}</AbsoluteFill>);
+  return (<AbsoluteFill><C p={palette(paletteId)} t={f / fps} w={width} h={height} />{grain > 0 && <Grain amount={grain} id={bg} shift={shift} />}</AbsoluteFill>);
 };

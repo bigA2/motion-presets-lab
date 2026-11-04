@@ -2,3 +2,5 @@
 *.env
 node_modules/
 out/
+dist-editor/
+out/

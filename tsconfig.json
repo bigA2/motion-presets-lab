@@ -1,2 +1,2 @@
 { "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "jsx": "react-jsx", "strict": true, "skipLibCheck": true, "noEmit": true, "lib": ["DOM", "ES2022"], "resolveJsonModule": true },
-  "include": ["presets/src", "editor/src"] }
+  "include": ["presets/src", "editor/src", "editor/vite-env.d.ts"] }

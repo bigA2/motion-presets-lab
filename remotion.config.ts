@@ -3,3 +3,5 @@ Config.setVideoImageFormat('jpeg');
 Config.setChromiumOpenGlRenderer('swangle');
 // Use a preinstalled browser if one is given (CI and cloud sandboxes); otherwise Remotion downloads its own.
 if (process.env.REMOTION_BROWSER) Config.setBrowserExecutable(process.env.REMOTION_BROWSER);
+// SFX live in presets/sfx/out and are served as static files (staticFile('click.wav')).
+Config.setPublicDir('presets/sfx/out');

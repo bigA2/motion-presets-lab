@@ -1,0 +1,45 @@
+name: render
+# Renders videos in the cloud — nothing to install locally.
+#  - push a JSON to ads/  -> renders every ads/*.json
+#  - Actions tab -> render -> Run workflow -> choose showreel / ads / all
+# Output: MP4s (audio mastered to -14 LUFS) + 4 fps review sheets, uploaded as workflow artifacts.
+on:
+  push:
+    branches: [main]
+    paths: ['ads/**', 'presets/src/**', 'presets/sfx/out/**', '.github/workflows/render.yml', 'scripts/render.mjs']
+  workflow_dispatch:
+    inputs:
+      what:
+        description: 'What to render'
+        type: choice
+        options: [all, showreel, ads]
+        default: all
+permissions:
+  contents: read
+concurrency: { group: 'render-${{ github.ref }}', cancel-in-progress: true }
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - name: System libraries for headless Chrome
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libnss3 libgbm1 libxkbcommon0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 libpango-1.0-0 libcairo2 libasound2t64 fonts-noto-color-emoji
+      - run: npm ci
+      - run: npx remotion browser ensure
+      - name: Render
+        env:
+          CONCURRENCY: 4
+        run: node scripts/render.mjs "${{ inputs.what || 'all' }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: videos-${{ github.run_number }}
+          path: out/*.mp4
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-frames-${{ github.run_number }}
+          path: out/review/
+          retention-days: 30

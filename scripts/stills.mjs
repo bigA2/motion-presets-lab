@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const [onlyKind, onlyId] = process.argv.slice(2);
 const browserExecutable = process.env.REMOTION_BROWSER || null;
-const serveUrl = await bundle({ entryPoint: path.resolve('presets/src/index.ts') });
+const serveUrl = await bundle({ entryPoint: path.resolve('presets/src/index.ts'), publicDir: path.resolve('presets/sfx/out') });
 const { TEXT_IDS, MOCK_IDS, MOCK_DUR, GLASS_IDS, BG_IDS } = JSON.parse(fs.readFileSync('presets/registry.json', 'utf8'));
 const jobs = [
   ...TEXT_IDS.map((id) => ['text', id, id === 'exitBlurDown' ? 25 : id === 'typewriter' ? 30 : ['counterUp', 'gradientSweep'].includes(id) ? 30 : 22]),

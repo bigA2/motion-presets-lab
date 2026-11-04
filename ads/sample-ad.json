@@ -1,0 +1,19 @@
+{
+  "version": 1, "name": "Tallyroom — close in hours", "fps": 30, "duration": 300, "format": "16:9",
+  "palette": "graphiteSignal", "background": "gridVignette", "grain": 0.05,
+  "elements": [
+    { "id": "hook", "type": "text", "start": 0, "end": 75, "x": 0.08, "y": 0.42, "text": "Month-end takes\n*nine days.*", "preset": "lineMaskRise", "size": 120,
+      "tracks": { "opacity": [{ "f": 62, "v": 1, "curve": "easeIn" }, { "f": 75, "v": 0 }], "blur": [{ "f": 62, "v": 0, "curve": "easeIn" }, { "f": 75, "v": 14 }] } },
+    { "id": "ui", "type": "mockup", "start": 70, "end": 230, "x": 0.5, "y": 0.52, "move": "landView", "scale": 0.82,
+      "tracks": { "scale": [{ "f": 40, "v": 1, "curve": "easeInOut" }, { "f": 150, "v": 1.12 }] } },
+    { "id": "stat", "type": "glass", "start": 120, "end": 230, "x": 0.66, "y": 0.6, "variant": "clear", "w": 0.28, "h": 0.3, "title": "412 matched", "body": "in 38 seconds",
+      "tracks": { "y": [{ "f": 0, "v": 80, "curve": "easeOutExpo" }, { "f": 24, "v": 0 }], "opacity": [{ "f": 0, "v": 0, "curve": "easeOut" }, { "f": 12, "v": 1 }] } },
+    { "id": "cta", "type": "text", "start": 228, "end": 300, "x": 0.5, "y": 0.46, "text": "Close the books\n*in hours.*", "preset": "scalePunchHot", "size": 140, "align": "center" },
+    { "id": "s1", "type": "sfx", "file": "riser.wav", "at": 0, "volume": 0.5 },
+    { "id": "s2", "type": "sfx", "file": "hit.wav", "at": 70, "volume": 0.9 },
+    { "id": "s3", "type": "sfx", "file": "data_loop.wav", "at": 90, "volume": 0.35 },
+    { "id": "s4", "type": "sfx", "file": "pop.wav", "at": 122, "volume": 0.8 },
+    { "id": "s5", "type": "sfx", "file": "whoosh.wav", "at": 214, "volume": 0.8 },
+    { "id": "s6", "type": "sfx", "file": "mech_click.wav", "at": 252, "volume": 0.9 }
+  ]
+}

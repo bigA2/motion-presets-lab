@@ -101,8 +101,8 @@ export const MockupMove: React.FC<{ move: string; p: Palette; start?: number; sc
     body = <div style={{ ...o.wrap, ...shadow, width: W, height: H, position: 'relative' }}><AppMock {...base} />{o.over && o.over !== undefined && !o.layers && move.startsWith('cursor') ? o.over(p) : null}</div>;
   }
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-      <div style={{ transform: `scale(${scale})`, position: 'relative', width: W, height: H }}>
+    <div style={{ position: 'absolute', inset: 0 }}>
+      <div style={{ position: 'absolute', left: '50%', top: '50%', marginLeft: -W / 2, marginTop: -H / 2, transform: `scale(${scale})`, width: W, height: H }}>
         {move === 'cardFan' || move === 'cardStack3D' || move === 'deviceSwap' ? <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>{body}</div> : body}
         {o.over && !move.startsWith('cursor') ? o.over(p) : null}
       </div>
